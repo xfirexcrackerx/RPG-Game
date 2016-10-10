@@ -46,19 +46,20 @@ addEventListener("keydown", function (e) {
 addEventListener("keyup", function (e) {
 	delete keysDown[e.keyCode];
 }, false);
+
 hero.x = canvas.width / 2;
 hero.y = canvas.height / 2;
+
 // Reset the game when the player catches a monster
-var reset = function () {
-
-
+function reset(){
 	// Throw the monster somewhere on the screen randomly
 	monster.x = 32 + (Math.random() * (canvas.width - 64));
 	monster.y = 32 + (Math.random() * (canvas.height - 64));
-};
+}
 
 // Update game objects
-var update = function (modifier) {
+function update(modifier){
+
 	if(hero.y>32)
 	if (38 in keysDown) { // Player holding up
 		hero.y -= hero.speed * modifier;
@@ -89,7 +90,7 @@ var update = function (modifier) {
 };
 
 // Draw everything
-var render = function () {
+function render(){
 	if (bgReady) {
 		ctx.drawImage(bgImage, 0, 0);
 	}
@@ -111,7 +112,7 @@ var render = function () {
 };
 
 // The main game loop
-var main = function () {
+function main(){
 	var now = Date.now();
 	var delta = now - then;
 
