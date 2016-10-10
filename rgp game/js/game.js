@@ -11,7 +11,7 @@ var bgImage = new Image();
 bgImage.onload = function () {
 	bgReady = true;
 };
-bgImage.src = "images/background1.png";
+bgImage.src = "images/background.png";
 
 // Hero image
 var heroReady = false;
@@ -31,7 +31,9 @@ monsterImage.src = "images/newMonster.png";
 
 // Game objects
 var hero = {
-	speed: 256 // movement in pixels per second
+	speed: 256,
+	isAlive:true// movement in pixels per second
+
 };
 var enemies = [{x: 0, y: 0, speed: 1}];
 var monstersCaught = 0;
@@ -57,9 +59,15 @@ function reset(){
 	for(let i = 0; i < enemies.length; i++){
 		enemies[i].x = 16 + (Math.random() * (canvas.width - 64));
 		enemies[i].y = 16 + (Math.random() * (canvas.height - 64));
-	}	
+	}
 }
-
+function gameOver() {
+	hero.isAlive=false;
+	ctx.fillStyle = "red";
+	ctx.font = "40px Helvetica ";
+	ctx.textAlign = "center";
+	ctx.fillText("GAME OVER",250,150);
+}
 // Update game objects
 function update(modifier){
 
@@ -91,11 +99,12 @@ function collisionWithEnemy(enemies, hero){
 			&& enemies[i].x <= (hero.x + monsterImage.width)
 			&& hero.y <= (enemies[i].y + monsterImage.width)
 			&& enemies[i].y <= (hero.y + monsterImage.width)) {
-			++monstersCaught;
+			gameOver();
+			//++monstersCaught;
 			if(monstersCaught == 5 || monstersCaught == 10 || monstersCaught == 15){
 				enemies.push({x: 0, y: 0, speed: 1});
 			}
-			reset();
+			//reset();
 		}
 	}
 }
@@ -167,8 +176,9 @@ function render(){
 	ctx.font = "24px Helvetica";
 	ctx.textAlign = "left";
 	ctx.textBaseline = "top";
-	ctx.fillText("Мъртви Ушефи: " + monstersCaught, 32, 32);
-};
+	var score =ctx.fillText("Мъртви Ушеви: " + monstersCaught, 32, 32);
+
+}
 
 // The main game loop
 function main(){
@@ -181,8 +191,15 @@ function main(){
 	then = now;
 
 	// Request to do this again ASAP
-	requestAnimationFrame(main);
-};
+	if(hero.isAlive){
+		requestAnimationFrame(main);
+
+	}
+	else {
+		gameOver();
+	}
+
+}
 
 // Cross-browser support for requestAnimationFrame
 var w = window;
