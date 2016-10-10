@@ -76,18 +76,15 @@ function update(modifier){
 	if (39 in keysDown) { // Player holding right
 		hero.x += hero.speed * modifier;
 	}
-
+	let x = (hero.x)-(monster.x);
+	let y = (hero.y)-(monster.y);
+	let distance = Math.sqrt(x*x*y*y);
 	// Are they touching?
-	if (
-		hero.x <= (monster.x + 32)
-		&& monster.x <= (hero.x + 32)
-		&& hero.y <= (monster.y + 32)
-		&& monster.y <= (hero.y + 32)
-	) {
+	if (distance<90) {
 		++monstersCaught;
 		reset();
 	}
-};
+}
 
 // Draw everything
 function render(){
