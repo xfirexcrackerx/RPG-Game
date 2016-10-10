@@ -33,8 +33,9 @@ monsterImage.src = "images/newMonster.png";
 var hero = {
 	speed: 256 // movement in pixels per second
 };
-var monster = {x: 0, y: 0, speed: 1};
+var enemies = [{x: 0, y: 0, speed: 1}];
 var monstersCaught = 0;
+
 
 // Handle keyboard controls
 var keysDown = {};
@@ -53,8 +54,10 @@ hero.y = canvas.height / 2;
 // Reset the game when the player catches a monster
 function reset(){
 	// Throw the monster somewhere on the screen randomly
-	monster.x = 16 + (Math.random() * (canvas.width - 64));
-	monster.y = 16 + (Math.random() * (canvas.height - 64));
+	for(let i = 0; i < enemies.length; i++){
+		enemies[i].x = 16 + (Math.random() * (canvas.width - 64));
+		enemies[i].y = 16 + (Math.random() * (canvas.height - 64));
+	}	
 }
 
 // Update game objects
@@ -76,59 +79,72 @@ function update(modifier){
 	if (39 in keysDown) { // Player holding right
 		hero.x += hero.speed * modifier;
 	}
-	enemyAI(monster, hero);
-	moveEnemy(monster);
+	enemyAI(enemies, hero);
+	moveEnemy(enemies);
+	lookingForCollisions(enemies, hero);
+	
+}
 
-	// Are they touching?
-	if (hero.x <= (monster.x + 32)
-		&& monster.x <= (hero.x + 32)
-		&& hero.y <= (monster.y + 32)
-		&& monster.y <= (hero.y + 32)) {
-		++monstersCaught;
-		reset();
+function collisionWithEnemy(enemies, hero){
+	for(let i = 0; i < enemies.length; i++){
+		if (hero.x <= (enemies[i].x + monsterImage.width)
+			&& enemies[i].x <= (hero.x + monsterImage.width)
+			&& hero.y <= (enemies[i].y + monsterImage.width)
+			&& enemies[i].y <= (hero.y + monsterImage.width)) {
+			++monstersCaught;
+			if(monstersCaught == 5 || monstersCaught == 10 || monstersCaught == 15){
+				enemies.push({x: 0, y: 0, speed: 1});
+			}
+			reset();
+		}
 	}
 }
 
-function enemyAI(monster, hero){
-	if(monster.x > hero.x){
-		monster.directionX = 'left';
-	}
-	else{
-		monster.directionX = 'right';
-	}
-	if(monster.y > hero.y){
-		monster.directionY = 'up';
-	}
-	else{
-		monster.directionY = 'down';
-	}
+function lookingForCollisions(enemy, hero){
+	collisionWithEnemy(enemy, hero)
 }
 
-function moveEnemy(monster){
-	
-	if(monster.directionX == 'right'){
-		if(monster.x + monster.speed < canvas.width){
-			monster.x += monster.speed;
+function enemyAI(enemies, hero){
+	for(let i = 0; i < enemies.length; i++){
+		if(enemies[i].x > hero.x){
+			enemies[i].directionX = 'left';
 		}
-	}
-	else{
-		if(monster.x - monster.speed > 0){
-			monster.x -= monster.speed;
+		else{
+			enemies[i].directionX = 'right';
 		}
-	}
-	if(monster.directionY == 'up'){
-		if(monster.y - monster.speed > 0){
-			monster.y -= monster.speed;
+		if(enemies[i].y > hero.y){
+			enemies[i].directionY = 'up';
 		}
-	}
-	else{
-		if(monster.y + monster.speed < canvas.height){
-			monster.y += monster.speed;
+		else{
+			enemies[i].directionY = 'down';
 		}
 	}
 	
-	
-	console.log(canvas.width);
+}
+
+function moveEnemy(enemies){
+	for(let i = 0; i < enemies.length; i++){
+		if(enemies[i].directionX == 'right'){
+			if(enemies[i].x + enemies[i].speed < canvas.width){
+				enemies[i].x += enemies[i].speed;
+			}
+		}
+		else{
+			if(enemies[i].x - enemies[i].speed > 0){
+				enemies[i].x -= enemies[i].speed;
+			}
+		}
+		if(enemies[i].directionY == 'up'){
+			if(enemies[i].y - enemies[i].speed > 0){
+				enemies[i].y -= enemies[i].speed;
+			}
+		}
+		else{
+			if(enemies[i].y + enemies[i].speed < canvas.height){
+				enemies[i].y += enemies[i].speed;
+			}
+		}
+	}
 }
 
 // Draw everything
@@ -140,11 +156,12 @@ function render(){
 	if (heroReady) {
 		ctx.drawImage(heroImage, hero.x, hero.y);
 	}
-
-	if (monsterReady) {
-		ctx.drawImage(monsterImage, monster.x, monster.y);
+	for(let i = 0; i < enemies.length; i++){
+		if (monsterReady) {
+			ctx.drawImage(monsterImage, enemies[i].x, enemies[i].y);
+		}
 	}
-
+	
 	// Score
 	ctx.fillStyle = "rgb(250, 250, 250)";
 	ctx.font = "24px Helvetica";
