@@ -19,7 +19,7 @@ var heroImage = new Image();
 heroImage.onload = function () {
 	heroReady = true;
 };
-heroImage.src = "images/newHero.png";
+heroImage.src = "images/hero.png";
 
 // Monster image
 var monsterReady = false;
@@ -27,11 +27,11 @@ var monsterImage = new Image();
 monsterImage.onload = function () {
 	monsterReady = true;
 };
-monsterImage.src = "images/newMonster.png";
+monsterImage.src = "images/monster.png";
 
 // Game objects
 var hero = {
-	speed: 280 // movement in pixels per second
+	speed: 256 // movement in pixels per second
 };
 var monster = {};
 var monstersCaught = 0;
@@ -59,20 +59,18 @@ var reset = function () {
 
 // Update game objects
 var update = function (modifier) {
-		if (38 in keysDown) { // Player holding up
-			hero.y -= hero.speed * modifier;
-		}
-		if (40 in keysDown) { // Player holding down
-			hero.y += hero.speed * modifier;
-		}
-		if (37 in keysDown) { // Player holding left
-			hero.x -= hero.speed * modifier;
-		}
-		if (39 in keysDown) { // Player holding right
-			hero.x += hero.speed * modifier;
-		}
-	
-	
+	if (38 in keysDown) { // Player holding up
+		hero.y -= hero.speed * modifier;
+	}
+	if (40 in keysDown) { // Player holding down
+		hero.y += hero.speed * modifier;
+	}
+	if (37 in keysDown) { // Player holding left
+		hero.x -= hero.speed * modifier;
+	}
+	if (39 in keysDown) { // Player holding right
+		hero.x += hero.speed * modifier;
+	}
 
 	// Are they touching?
 	if (
@@ -105,7 +103,7 @@ var render = function () {
 	ctx.font = "24px Helvetica";
 	ctx.textAlign = "left";
 	ctx.textBaseline = "top";
-	ctx.fillText("Score: " + monstersCaught, 32, 32);
+	ctx.fillText("Goblins caught: " + monstersCaught, 32, 32);
 };
 
 // The main game loop
@@ -121,6 +119,7 @@ var main = function () {
 	// Request to do this again ASAP
 	requestAnimationFrame(main);
 };
+
 // Cross-browser support for requestAnimationFrame
 var w = window;
 requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame || w.msRequestAnimationFrame || w.mozRequestAnimationFrame;
@@ -129,5 +128,3 @@ requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame
 var then = Date.now();
 reset();
 main();
-
-
