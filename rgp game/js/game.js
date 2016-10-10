@@ -53,8 +53,8 @@ hero.y = canvas.height / 2;
 // Reset the game when the player catches a monster
 function reset(){
 	// Throw the monster somewhere on the screen randomly
-	monster.x = 32 + (Math.random() * (canvas.width - 64));
-	monster.y = 32 + (Math.random() * (canvas.height - 64));
+	monster.x = 16 + (Math.random() * (canvas.width - 64));
+	monster.y = 16 + (Math.random() * (canvas.height - 64));
 }
 
 // Update game objects
@@ -105,7 +105,7 @@ function render(){
 	ctx.font = "24px Helvetica";
 	ctx.textAlign = "left";
 	ctx.textBaseline = "top";
-	ctx.fillText("Goblins caught: " + monstersCaught, 32, 32);
+	ctx.fillText("Мъртви Ушефи: " + monstersCaught, 32, 32);
 };
 
 // The main game loop
