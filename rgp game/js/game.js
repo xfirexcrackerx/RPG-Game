@@ -33,7 +33,7 @@ monsterImage.src = "images/newMonster.png";
 var hero = {
 	speed: 256 // movement in pixels per second
 };
-var monster = {};
+var monster = {x: 0, y: 0, speed: 1};
 var monstersCaught = 0;
 
 // Handle keyboard controls
@@ -76,6 +76,8 @@ function update(modifier){
 	if (39 in keysDown) { // Player holding right
 		hero.x += hero.speed * modifier;
 	}
+	enemyAI(monster, hero);
+	moveEnemy(monster);
 
 	// Are they touching?
 	if (hero.x <= (monster.x + 32)
@@ -86,6 +88,49 @@ function update(modifier){
 		reset();
 	}
 }
+
+function enemyAI(monster, hero){
+	if(monster.x > hero.x){
+		monster.directionX = 'left';
+	}
+	else{
+		monster.directionX = 'right';
+	}
+	if(monster.y > hero.y){
+		monster.directionY = 'up';
+	}
+	else{
+		monster.directionY = 'down';
+	}
+}
+
+function moveEnemy(monster){
+	
+	if(monster.directionX == 'right'){
+		if(monster.x + monster.speed < canvas.width){
+			monster.x += monster.speed;
+		}
+	}
+	else{
+		if(monster.x - monster.speed > 0){
+			monster.x -= monster.speed;
+		}
+	}
+	if(monster.directionY == 'up'){
+		if(monster.y - monster.speed > 0){
+			monster.y -= monster.speed;
+		}
+	}
+	else{
+		if(monster.y + monster.speed < canvas.height){
+			monster.y += monster.speed;
+		}
+	}
+	
+	
+	console.log(canvas.width);
+}
+
 // Draw everything
 function render(){
 	if (bgReady) {
