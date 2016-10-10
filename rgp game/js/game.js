@@ -181,23 +181,29 @@ function render(){
 }
 
 // The main game loop
+
 function main(){
-	var now = Date.now();
-	var delta = now - then;
 
-	update(delta / 1000);
-	render();
-
-	then = now;
-
-	// Request to do this again ASAP
-	if(hero.isAlive){
+	if(!hero.isAlive){
+		gameOver();
+		if (32 in keysDown) {
+			hero.isAlive = true;
+		}
+		reset();
 		requestAnimationFrame(main);
-
 	}
 	else {
-		gameOver();
+		var now = Date.now();
+		var delta = now - then;
+		update(delta / 1000);
+		render();
+		then = now;
+		requestAnimationFrame(main);
 	}
+	
+
+	// Request to do this again ASAP
+	
 
 }
 
@@ -208,4 +214,5 @@ requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame
 // Let's play this game!
 var then = Date.now();
 reset();
+
 main();
