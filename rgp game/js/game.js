@@ -50,23 +50,28 @@ addEventListener("keyup", function (e) {
 	delete keysDown[e.keyCode];
 }, false);
 
-hero.x = canvas.width / 2;
-hero.y = canvas.height / 2;
 
-// Reset the game when the player catches a monster
+
 function reset(){
 	// Throw the monster somewhere on the screen randomly
 	for(let i = 0; i < enemies.length; i++){
 		enemies[i].x = 16 + (Math.random() * (canvas.width - 64));
 		enemies[i].y = 16 + (Math.random() * (canvas.height - 64));
+		hero.y = canvas.height / 2;
+		hero.x = canvas.width / 2;
+
 	}
 }
 function gameOver() {
 	hero.isAlive=false;
 	ctx.fillStyle = "red";
-	ctx.font = "40px Helvetica ";
+	ctx.font = "40px Comic-sans";
 	ctx.textAlign = "center";
 	ctx.fillText("GAME OVER",250,150);
+	ctx.fillStyle = "white";
+	ctx.font = "20px Comic-sans ";
+	//ctx.textAlign = "center";
+	ctx.fillText("press space to restart",250,200);
 }
 // Update game objects
 function update(modifier){
@@ -176,7 +181,7 @@ function render(){
 	ctx.font = "24px Helvetica";
 	ctx.textAlign = "left";
 	ctx.textBaseline = "top";
-	var score =ctx.fillText("Мъртви Ушеви: " + monstersCaught, 32, 32);
+	var score =ctx.fillText("Score: " + monstersCaught, 32, 32);
 
 }
 
