@@ -27,16 +27,26 @@ var monsterImage = new Image();
 monsterImage.onload = function () {
 	monsterReady = true;
 };
+
+var ballReady = false;
+var ballImage = new Image();
+ballImage.onload = function(){
+	ballReady = true;
+}
+ballImage.src = "images/BallBlue.jpg";
+
 monsterImage.src = "images/newMonster.png";
 
 // Game objects
 var hero = {
 	speed: 256,
-	isAlive:true// movement in pixels per second
-
+	isAlive:true, // movement in pixels per second
+	x: canvas.width / 2,
+	y: canvas.height / 2
 };
 var enemies = [{x: 0, y: 0, speed: 1}];
 var monstersCaught = 0;
+var balls = [];
 
 
 // Handle keyboard controls
@@ -92,33 +102,104 @@ function update(modifier){
 	if (39 in keysDown) { // Player holding right
 		hero.x += hero.speed * modifier;
 	}
-	enemyAI(enemies, hero);
-	moveEnemy(enemies);
-	lookingForCollisions(enemies, hero);
+
+	fire();
+	enemyAI();
+	moveEnemy();
+	moveBullets();
+	collistionEnemyWithBullets();
+	lookingForCollisions();
 	
 }
 
-function collisionWithEnemy(enemies, hero){
+function fire(){
+	let ball = {};
+	ball.x = hero.x;
+	ball.y = hero.y;
+	ball.speed = 10;
+	if (68 in keysDown){ //d
+		ball.direction = "right";
+		balls.push(ball);	
+	}
+	else if(83 in keysDown){ //s
+		ball.direction = "down";
+		balls.push(ball);
+	}
+	else if(65 in keysDown){ //a
+		ball.direction = "left";
+		balls.push(ball);
+	}
+	else if(87 in keysDown){ //w
+		ball.direction = "up";
+		balls.push(ball);
+	}
+}
+
+function moveBullets(){
+	for(let i = 0; i < balls.length; i++){
+		if(balls[i].direction == "up"){
+			balls[i].y -= balls[i].speed;
+			if(balls[i].y <= 10){
+				balls.splice(i, 1);
+			}
+		}
+		else if(balls[i].direction == "down"){
+			balls[i].y += balls[i].speed;
+			if(balls[i].y >= canvas.height){
+				balls.splice(i, 1);
+			}
+		}
+		else if(balls[i].direction == "right"){
+			balls[i].x += balls[i].speed;
+			if(balls[i].x >= canvas.width){
+				balls.splice(i, 1);
+			}
+		}
+		else if(balls[i].direction == "left"){
+			balls[i].x -= balls[i].speed;
+			if(balls[i].x <= 10){
+				balls.splice(i, 1);
+			}
+		}
+	}
+}
+
+function collistionEnemyWithBullets(){
+	for(let i = 0; i < balls.length; i++){
+		let currentBullet = balls[i];
+		for(let j = 0; j < enemies.length; j++){
+			var currentEnemy = enemies[j];
+			console.log(currentEnemy);
+			console.log(currentBullet);
+			if(Math.round(currentEnemy.x) == Math.round(currentBullet.x) + 10 && Math.round(currentEnemy.y) == Math.round(currentBullet.y) + 10){
+				enemies.splice(j, 1);
+				return;
+			}
+		}
+	}
+}
+
+function collisionWithEnemy(){
 	for(let i = 0; i < enemies.length; i++){
 		if (hero.x <= (enemies[i].x + monsterImage.width)
 			&& enemies[i].x <= (hero.x + monsterImage.width)
 			&& hero.y <= (enemies[i].y + monsterImage.width)
 			&& enemies[i].y <= (hero.y + monsterImage.width)) {
-			gameOver();
-			//++monstersCaught;
+			//gameOver();
+			++monstersCaught;
 			if(monstersCaught == 5 || monstersCaught == 10 || monstersCaught == 15){
 				enemies.push({x: 0, y: 0, speed: 1});
 			}
-			//reset();
+			reset();
 		}
 	}
 }
 
-function lookingForCollisions(enemy, hero){
-	collisionWithEnemy(enemy, hero)
+function lookingForCollisions(){
+	collisionWithEnemy()
 }
 
-function enemyAI(enemies, hero){
+function enemyAI(){
 	for(let i = 0; i < enemies.length; i++){
 		if(enemies[i].x > hero.x){
 			enemies[i].directionX = 'left';
@@ -136,7 +217,11 @@ function enemyAI(enemies, hero){
 	
 }
 
-function moveEnemy(enemies){
+function collisionEnemyWithWalls(){
+	
+}
+
+function moveEnemy(){
 	for(let i = 0; i < enemies.length; i++){
 		if(enemies[i].directionX == 'right'){
 			if(enemies[i].x + enemies[i].speed < canvas.width){
@@ -158,7 +243,7 @@ function moveEnemy(enemies){
 				enemies[i].y += enemies[i].speed;
 			}
 		}
-	}
+	}	
 }
 
 // Draw everything
@@ -173,6 +258,12 @@ function render(){
 	for(let i = 0; i < enemies.length; i++){
 		if (monsterReady) {
 			ctx.drawImage(monsterImage, enemies[i].x, enemies[i].y);
+		}
+	}
+
+	if(ballReady){
+		for(let i = 0; i < balls.length; i++){
+			ctx.drawImage(ballImage, balls[i].x, balls[i].y);
 		}
 	}
 	
