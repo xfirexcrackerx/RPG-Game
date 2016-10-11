@@ -76,19 +76,19 @@ function gameOver() {
 // Update game objects
 function update(modifier){
 
-	if(hero.y>32)
+	if(hero.y>1)
 	if (38 in keysDown) { // Player holding up
 		hero.y -= hero.speed * modifier;
 	}
-	if(hero.y<canvas.height-64)
+	if(hero.y<canvas.height-40)
 	if (40 in keysDown) { // Player holding down
 		hero.y += hero.speed * modifier;
 	}
-	if(hero.x>32)
+	if(hero.x>1)
 	if (37 in keysDown) { // Player holding left
 		hero.x -= hero.speed * modifier;
 	}
-	if(hero.x<canvas.width-64)
+	if(hero.x<canvas.width-40)
 	if (39 in keysDown) { // Player holding right
 		hero.x += hero.speed * modifier;
 	}
