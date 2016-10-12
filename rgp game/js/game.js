@@ -67,8 +67,6 @@ addEventListener("keyup", function (e) {
 function reset(){
 	// Throw the monster somewhere on the screen randomly
 	for(let i = 0; i < enemies.length; i++){
-		hero.y = canvas.height / 2;
-		hero.x = canvas.width / 2;
 		
 		while(true){
 		enemies[i].x = 16 + (Math.random() * (canvas.width - 64));
