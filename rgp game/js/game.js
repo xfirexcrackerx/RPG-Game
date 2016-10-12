@@ -48,6 +48,7 @@ var enemies = [{x: 0, y: 0, speed: 1}];
 var monstersCaught = 0;
 var balls = [];
 var level = 1;
+var pressSpaceToContinue = false;
 
 
 // Handle keyboard controls
@@ -254,16 +255,10 @@ function collistionEnemyWithBullets(){
 							level = 2;
 							monsterImage.src = "images/enemy1.png";
 							enemies = [];
-							ctx.fillStyle = "red";
-							ctx.font = "40px Comic-sans";
-							ctx.textAlign = "center";
-							ctx.fillStyle = "white";
-							ctx.font = "20px Comic-sans ";
-							ctx.fillText("press space to level 2",250,200);
-							if (32 in keysDown) {
-								reset();
-								enemies.push({x: 0, y: 0, speed: 1});
-							}							
+							pressSpaceToContinue = true;
+							hero.isAlive = false;
+							reset();
+							enemies.push({x: 0, y: 0, speed: 1});					
 						}
 						reset();
 					}
@@ -373,13 +368,28 @@ function render(){
 
 function main(){
 	if(!hero.isAlive){
-		gameOver();
-		if (32 in keysDown) {
-			hero.isAlive = true;
-			monstersCaught = 0;
+		if(!pressSpaceToContinue){
+			gameOver();
+			if (32 in keysDown) {
+				hero.isAlive = true;
+				monstersCaught = 0;
+			}
+			reset();
+			requestAnimationFrame(main);
 		}
-		reset();
-		requestAnimationFrame(main);
+		else{
+			ctx.fillStyle = "red";
+			ctx.font = "40px Comic-sans";
+			ctx.textAlign = "center";
+			ctx.fillStyle = "white";
+			ctx.font = "20px Comic-sans ";
+			ctx.fillText("press space to level 2",250,200);
+			if(32 in keysDown){
+				hero.isAlive = true;
+				pressSpaceToContinue = false;
+			}
+			requestAnimationFrame(main);
+		}		
 	}
 	else {
 		var now = Date.now();
