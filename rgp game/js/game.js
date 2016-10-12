@@ -29,13 +29,6 @@ monsterImage.onload = function () {
 };
 monsterImage.src = "images/newMonster.png";
 
-var bossReady = false;
-var bossImage = new Image();
-bossImage.onload = function(){
-	bossReady = true;
-}
-bossImage.src = "images/BigEnemy.png";
-
 var ballReady = false;
 var ballImage = new Image();
 ballImage.onload = function(){
@@ -47,16 +40,16 @@ ballImage.src = "images/BallBlue.png";
 // Game objects
 var hero = {
 	speed: 256,
-	isAlive:false, // movement in pixels per second
+	isAlive:true, // movement in pixels per second
 	x: canvas.width / 2,
 	y: canvas.height / 2
 };
 var enemies = [{x: 0, y: 0, speed: 1}];
 var monstersCaught = 0;
-var boss = {};
 var balls = [];
 var level = 1;
-var pressSpaceToContinue = true;
+var pressSpaceToContinue = false;
+var win = false;
 
 
 // Handle keyboard controls
@@ -89,13 +82,18 @@ function reset(){
 }
 function gameOver() {
 	hero.isAlive=false;
+	enemies = [];
+	enemies.push({x: 0, y: 0, speed: 1});
+	hero.x = canvas.width / 2;
+	hero.y = canvas.height / 2;
+	level = 1;
+	monstersCaught = 0;
 	ctx.fillStyle = "red";
 	ctx.font = "60px Comic-sans";
 	ctx.textAlign = "center";
 	ctx.fillText("GAME OVER",canvas.width/2,canvas.height/2-50);
 	ctx.fillStyle = "white";
 	ctx.font = "35px Comic-sans ";
-	//ctx.textAlign = "center";
 	ctx.fillText("press space to restart",canvas.width/2,canvas.height/2);
 }
 // Update game objects
@@ -125,8 +123,6 @@ function update(modifier){
 	lookingForCollisions();
 }
 
-let fireDirection = "d";
-
 function fire(){
 
 	let ball = {};
@@ -140,7 +136,6 @@ function fire(){
 			balls.push(ball);	
 			fired = true;
 		}
-		fireDirection = "d";
 	}
 	else if(83 in keysDown){ //s
 		ball.direction = "down";
@@ -149,7 +144,6 @@ function fire(){
 			balls.push(ball);	
 			fired = true;
 		}
-		fireDirection = "s";
 	}
 	else if(65 in keysDown){ //a
 		ball.direction = "left";
@@ -158,7 +152,6 @@ function fire(){
 			balls.push(ball);	
 			fired = true;
 		}
-		fireDirection = "a";
 	}
 	else if(87 in keysDown){ //w
 		ball.direction = "up";
@@ -167,7 +160,6 @@ function fire(){
 			balls.push(ball);	
 			fired = true;
 		}
-		fireDirection = "w";
 	}
 }
 
@@ -221,22 +213,8 @@ function collistionEnemyWithBullets(){
 			let currentBulletXPos = Math.round(currentBullet.x);
 			let currentBulletYPos = Math.round(currentBullet.y);
 			
-			let bossX = Math.round(boss.x);
-			let bossY = Math.round(boss.y);
-			
 			let currentEnemyXPos = Math.round(currentEnemy.x);
 			let currentEnemyYPos = Math.round(currentEnemy.y);
-
-			if(compare(bossX, currentBulletXPos) && compare(bossY, currentBulletYPos)){
-				boss.health--;
-				if(boss.health == 0){
-					boss = {};
-				}
-				if(enemies.length == 0 && boss.health == 0){
-					pressSpaceToContinue = true;
-					hero.isAlive = false;
-				}
-			}
 
 			if(compare(currentEnemyXPos,currentBulletXPos) && compare(currentEnemyYPos,currentBulletYPos)) 
 			{
@@ -293,15 +271,22 @@ function collistionEnemyWithBullets(){
 							enemies.push({x: 0, y: 0, speed: 1});
 							enemies.push({x: 0, y: 0, speed: 1});
 							enemies.push({x: 0, y: 0, speed: 1});
-							enemies.push({x: 0, y: 0, speed: 1});				
+							enemies.push({x: 0, y: 0, speed: 1});
+							enemies.push({x: 0, y: 0, speed: 1});
+							enemies.push({x: 0, y: 0, speed: 1});
+							enemies.push({x: 0, y: 0, speed: 1});
+							enemies.push({x: 0, y: 0, speed: 1});
+							enemies.push({x: 0, y: 0, speed: 1});
+							enemies.push({x: 0, y: 0, speed: 1});			
 						}
 						reset();
 					}
 				}
 				else if(level == 2){
-					if(enemies.length == 0 && boss.health == 0){
+					if(enemies.length == 0){
 						pressSpaceToContinue = true;
 						hero.isAlive = false;
+						win = true;
 					}
 				}
 				
@@ -321,15 +306,6 @@ function collisionWithEnemy(){
 			reset();
 			gameOver();
 		}
-	}
-
-	if (hero.x <= (boss.x + bossImage.width)
-		&& boss.x <= (hero.x + bossImage.width)
-		&& hero.y <= (boss.y + bossImage.width)
-		&& boss.y <= (hero.y + bossImage.width)) {
-
-		reset();
-		gameOver();
 	}
 }
 
@@ -352,20 +328,6 @@ function enemyAI(){
 		else{
 			enemies[i].directionY = 'down';
 		}
-	}
-
-	//boss AI
-	if(boss.x > hero.x){
-		boss.directionX = 'left';
-	}
-	else{
-		boss.directionX = 'right';
-	}
-	if(boss.y > hero.y){
-		boss.directionY = 'up';
-	}
-	else{
-		boss.directionY = 'down';
 	}
 }
 
@@ -392,28 +354,6 @@ function moveEnemy(){
 			}
 		}
 	}
-
-	//move boss
-	if(boss.directionX == 'right'){
-		if(boss.x + boss.speed < canvas.width){
-			boss.x += boss.speed;
-		}
-	}
-	else{
-		if(boss.x - boss.speed > 0){
-			boss.x -= boss.speed;
-		}
-	}
-	if(boss.directionY == 'up'){
-		if(boss.y - boss.speed > 0){
-			boss.y -= boss.speed;
-		}
-	}
-	else{
-		if(boss.y + boss.speed < canvas.height){
-			boss.y += boss.speed;
-		}
-	}
 }
 
 // Draw everything
@@ -436,10 +376,6 @@ function render(){
 			ctx.drawImage(ballImage, balls[i].x, balls[i].y);
 		}
 	}
-
-	if(bossReady){
-		ctx.drawImage(bossImage, boss.x, boss.y);
-	}
 	
 	// Score
 	ctx.fillStyle = "rgb(250, 250, 250)";
@@ -459,24 +395,36 @@ function main(){
 			if (32 in keysDown) {
 				hero.isAlive = true;
 				monstersCaught = 0;
+				monsterImage.src = "images/newMonster.png";
+				bgImage.src = "images/background.png";
 			}
 			reset();
 			requestAnimationFrame(main);
 		}
 		else{
-			ctx.fillStyle = "Black";
-			ctx.fillRect(0,0,canvas.width,canvas.height)
-			ctx.font = "40px Comic-sans";
-			ctx.textAlign = "center";
-			ctx.fillStyle = "blue";
-			ctx.font = "20px Comic-sans ";
-			ctx.fillText("press space to continue",canvas.width/2,canvas.height/2);
-			if(32 in keysDown){
-				hero.isAlive = true;
-				pressSpaceToContinue = false;
+			if(win){
+				ctx.fillStyle = "blue";
+				ctx.font = "40px Comic-sans";
+				ctx.textAlign = "center";
+				ctx.fillStyle = "white";
+				ctx.font = "40px Comic-sans ";
+				ctx.fillText("YOU WIN",canvas.width/2,canvas.height/2);
+				ctx.fillText("YOUR SCORE: " + monstersCaught,canvas.width/2,canvas.height/2 + 70);
 			}
+			else{
+				ctx.fillStyle = "red";
+				ctx.font = "40px Comic-sans";
+				ctx.textAlign = "center";
+				ctx.fillStyle = "white";
+				ctx.font = "40px Comic-sans ";
+				ctx.fillText("press space to continue to level 2",canvas.width/2,canvas.height/2);
+				if(32 in keysDown){
+					hero.isAlive = true;
+					pressSpaceToContinue = false;
+				}
+			}
+			
 			requestAnimationFrame(main);
-
 		}		
 	}
 	else {
