@@ -47,7 +47,7 @@ ballImage.src = "images/BallBlue.png";
 // Game objects
 var hero = {
 	speed: 256,
-	isAlive:true, // movement in pixels per second
+	isAlive:false, // movement in pixels per second
 	x: canvas.width / 2,
 	y: canvas.height / 2
 };
@@ -56,7 +56,7 @@ var monstersCaught = 0;
 var boss = {};
 var balls = [];
 var level = 1;
-var pressSpaceToContinue = false;
+var pressSpaceToContinue = true;
 
 
 // Handle keyboard controls
@@ -464,21 +464,19 @@ function main(){
 			requestAnimationFrame(main);
 		}
 		else{
-			ctx.fillStyle = "red";
+			ctx.fillStyle = "Black";
+			ctx.fillRect(0,0,canvas.width,canvas.height)
 			ctx.font = "40px Comic-sans";
 			ctx.textAlign = "center";
-			ctx.fillStyle = "white";
-			ctx.font = "40px Comic-sans ";
-			ctx.fillText("press space to continue to level 2",canvas.width/2,canvas.height/2);
+			ctx.fillStyle = "blue";
+			ctx.font = "20px Comic-sans ";
+			ctx.fillText("press space to continue",canvas.width/2,canvas.height/2);
 			if(32 in keysDown){
 				hero.isAlive = true;
 				pressSpaceToContinue = false;
-				boss.x = canvas.width / 2;
-				boss.y = 10;
-				boss.health = 10;
-				boss.speed = 1;
 			}
 			requestAnimationFrame(main);
+
 		}		
 	}
 	else {
