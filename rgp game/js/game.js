@@ -114,8 +114,8 @@ function update(modifier){
 
 function fire(){
 	let ball = {};
-	ball.x = hero.x;
-	ball.y = hero.y;
+	ball.x = hero.x+15;
+	ball.y = hero.y+15;
 	ball.speed = 10;
 	if (68 in keysDown){ //d
 		ball.direction = "right";
@@ -171,7 +171,7 @@ function collistionEnemyWithBullets(){
 			var currentEnemy = enemies[j];
 			console.log(currentEnemy);
 			console.log(currentBullet);
-			if(Math.round(currentEnemy.x) == Math.round(currentBullet.x) + 10 && Math.round(currentEnemy.y) == Math.round(currentBullet.y) + 10){
+			if(Math.round(currentEnemy.x+15) == Math.round(currentBullet.x)  && Math.round(currentEnemy.y+15) == Math.round(currentBullet.y)){
 				enemies.splice(j, 1);
 				return;
 			}
