@@ -1,8 +1,8 @@
 // Create the canvas
 var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
-canvas.width = 512;
-canvas.height = 480;
+canvas.width = 1301;
+canvas.height = 600;
 document.body.appendChild(canvas);
 
 // Background image
@@ -82,13 +82,13 @@ function reset(){
 function gameOver() {
 	hero.isAlive=false;
 	ctx.fillStyle = "red";
-	ctx.font = "40px Comic-sans";
+	ctx.font = "60px Comic-sans";
 	ctx.textAlign = "center";
-	ctx.fillText("GAME OVER",250,150);
+	ctx.fillText("GAME OVER",canvas.width/2,canvas.height/2-50);
 	ctx.fillStyle = "white";
-	ctx.font = "20px Comic-sans ";
+	ctx.font = "35px Comic-sans ";
 	//ctx.textAlign = "center";
-	ctx.fillText("press space to restart",250,200);
+	ctx.fillText("press space to restart",canvas.width/2,canvas.height/2);
 }
 // Update game objects
 function update(modifier){
@@ -273,6 +273,7 @@ function collistionEnemyWithBullets(){
 		}
 	}
 }
+
 function collisionWithEnemy(){
 	for(let i = 0; i < enemies.length; i++){
 		if (hero.x <= (enemies[i].x + monsterImage.width)
@@ -382,8 +383,8 @@ function main(){
 			ctx.font = "40px Comic-sans";
 			ctx.textAlign = "center";
 			ctx.fillStyle = "white";
-			ctx.font = "20px Comic-sans ";
-			ctx.fillText("press space to level 2",250,200);
+			ctx.font = "40px Comic-sans ";
+			ctx.fillText("press space to continue to level 2",canvas.width/2,canvas.height/2);
 			if(32 in keysDown){
 				hero.isAlive = true;
 				pressSpaceToContinue = false;
