@@ -51,6 +51,7 @@ var balls = [];
 
 // Handle keyboard controls
 var keysDown = {};
+var fired = false;
 
 addEventListener("keydown", function (e) {
 	keysDown[e.keyCode] = true;
@@ -58,6 +59,7 @@ addEventListener("keydown", function (e) {
 
 addEventListener("keyup", function (e) {
 	delete keysDown[e.keyCode];
+	fired = false;
 }, false);
 
 
@@ -65,11 +67,16 @@ addEventListener("keyup", function (e) {
 function reset(){
 	// Throw the monster somewhere on the screen randomly
 	for(let i = 0; i < enemies.length; i++){
-		enemies[i].x = 16 + (Math.random() * (canvas.width - 64));
-		enemies[i].y = 16 + (Math.random() * (canvas.height - 64));
 		hero.y = canvas.height / 2;
 		hero.x = canvas.width / 2;
-
+		
+		while(true){
+		enemies[i].x = 16 + (Math.random() * (canvas.width - 64));
+		enemies[i].y = 16 + (Math.random() * (canvas.height - 64));	
+		if((enemies[i].x+75 < hero.x || enemies[i].x-75 > hero.x) &&
+			(enemies[i].y+75 < hero.y || enemies[i].y-75 > hero.y) ) 
+			break;
+		}
 	}
 }
 function gameOver() {
@@ -107,31 +114,52 @@ function update(modifier){
 	enemyAI();
 	moveEnemy();
 	moveBullets();
-	collistionEnemyWithBullets();
 	lookingForCollisions();
-	
 }
 
+let fireDirection = "d";
+
 function fire(){
+
 	let ball = {};
-	ball.x = hero.x+15;
-	ball.y = hero.y+15;
+	ball.x = hero.x;
+	ball.y = hero.y;
 	ball.speed = 10;
 	if (68 in keysDown){ //d
 		ball.direction = "right";
-		balls.push(ball);	
+		if(!fired)
+		{
+			balls.push(ball);	
+			fired = true;
+		}
+		fireDirection = "d";
 	}
 	else if(83 in keysDown){ //s
 		ball.direction = "down";
-		balls.push(ball);
+		if(!fired)
+		{
+			balls.push(ball);	
+			fired = true;
+		}
+		fireDirection = "s";
 	}
 	else if(65 in keysDown){ //a
 		ball.direction = "left";
-		balls.push(ball);
+		if(!fired)
+		{
+			balls.push(ball);	
+			fired = true;
+		}
+		fireDirection = "a";
 	}
 	else if(87 in keysDown){ //w
 		ball.direction = "up";
-		balls.push(ball);
+		if(!fired)
+		{
+			balls.push(ball);	
+			fired = true;
+		}
+		fireDirection = "w";
 	}
 }
 
@@ -139,7 +167,7 @@ function moveBullets(){
 	for(let i = 0; i < balls.length; i++){
 		if(balls[i].direction == "up"){
 			balls[i].y -= balls[i].speed;
-			if(balls[i].y <= 10){
+			if(balls[i].y <= 0){
 				balls.splice(i, 1);
 			}
 		}
@@ -157,11 +185,23 @@ function moveBullets(){
 		}
 		else if(balls[i].direction == "left"){
 			balls[i].x -= balls[i].speed;
-			if(balls[i].x <= 10){
+			if(balls[i].x <= 0){
 				balls.splice(i, 1);
 			}
 		}
 	}
+}
+
+//Used to compare close pixels to fix the rounding problem
+function compare(x, y){
+	if( x == y ) return true;
+	for(let i = 1; i <= 10; i++)
+	{
+		if( x+i == y ) return true;
+		if( x == y+i ) return true;	
+	}
+	
+	return false;
 }
 
 function collistionEnemyWithBullets(){
@@ -169,34 +209,49 @@ function collistionEnemyWithBullets(){
 		let currentBullet = balls[i];
 		for(let j = 0; j < enemies.length; j++){
 			var currentEnemy = enemies[j];
-			console.log(currentEnemy);
-			console.log(currentBullet);
-			if(Math.round(currentEnemy.x+15) == Math.round(currentBullet.x)  && Math.round(currentEnemy.y+15) == Math.round(currentBullet.y)){
+			if(compare(Math.round(currentEnemy.x),Math.round(currentBullet.x)) && compare(Math.round(currentEnemy.y),Math.round(currentBullet.y))) 
+			{
+				balls = [];
 				enemies.splice(j, 1);
+				++monstersCaught;
+				if(enemies.length == 0) {
+					enemies.push({x: 0, y: 0, speed: 1});
+					if(monstersCaught >= 5 && monstersCaught <= 9){
+						enemies.push({x: 0, y: 0, speed: 1});
+					}
+				
+					if(monstersCaught >= 10 && monstersCaught <= 14){
+						enemies.push({x: 0, y: 0, speed: 1});
+						enemies.push({x: 0, y: 0, speed: 1});
+					}
+					if(monstersCaught >= 15){
+						enemies.push({x: 0, y: 0, speed: 1});
+						enemies.push({x: 0, y: 0, speed: 1});
+						enemies.push({x: 0, y: 0, speed: 1});
+					}
+					reset();
+				}
 				return;
-			}
+			}			
 		}
 	}
 }
-
 function collisionWithEnemy(){
 	for(let i = 0; i < enemies.length; i++){
 		if (hero.x <= (enemies[i].x + monsterImage.width)
 			&& enemies[i].x <= (hero.x + monsterImage.width)
 			&& hero.y <= (enemies[i].y + monsterImage.width)
 			&& enemies[i].y <= (hero.y + monsterImage.width)) {
-			//gameOver();
-			++monstersCaught;
-			if(monstersCaught == 5 || monstersCaught == 10 || monstersCaught == 15){
-				enemies.push({x: 0, y: 0, speed: 1});
-			}
+
 			reset();
+			gameOver();
 		}
 	}
 }
 
 function lookingForCollisions(){
-	collisionWithEnemy()
+	collisionWithEnemy();
+	collistionEnemyWithBullets();
 }
 
 function enemyAI(){
@@ -214,10 +269,6 @@ function enemyAI(){
 			enemies[i].directionY = 'down';
 		}
 	}
-	
-}
-
-function collisionEnemyWithWalls(){
 	
 }
 
@@ -279,11 +330,11 @@ function render(){
 // The main game loop
 
 function main(){
-
 	if(!hero.isAlive){
 		gameOver();
 		if (32 in keysDown) {
 			hero.isAlive = true;
+			monstersCaught = 0;
 		}
 		reset();
 		requestAnimationFrame(main);
@@ -296,11 +347,6 @@ function main(){
 		then = now;
 		requestAnimationFrame(main);
 	}
-	
-
-	// Request to do this again ASAP
-	
-
 }
 
 // Cross-browser support for requestAnimationFrame
@@ -310,5 +356,4 @@ requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame
 // Let's play this game!
 var then = Date.now();
 reset();
-
 main();
