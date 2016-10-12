@@ -51,13 +51,15 @@ var balls = [];
 
 // Handle keyboard controls
 var keysDown = {};
+var fired = false;
 
 addEventListener("keydown", function (e) {
-	keysDown[e.keyCode] = true;
+		keysDown[e.keyCode] = true;
 }, false);
 
 addEventListener("keyup", function (e) {
 	delete keysDown[e.keyCode];
+	fired = false;
 }, false);
 
 
@@ -85,7 +87,6 @@ function gameOver() {
 	ctx.font = "20px Comic-sans ";
 	//ctx.textAlign = "center";
 	ctx.fillText("press space to restart",250,200);
-	monstersCaught = 0;
 }
 // Update game objects
 function update(modifier){
@@ -106,7 +107,7 @@ function update(modifier){
 	if (39 in keysDown) { // Player holding right
 		hero.x += hero.speed * modifier;
 	}
-
+	
 	fire();
 	enemyAI();
 	moveEnemy();
@@ -119,28 +120,45 @@ function update(modifier){
 let fireDirection = "d";
 
 function fire(){
+
 	let ball = {};
 	ball.x = hero.x;
 	ball.y = hero.y;
 	ball.speed = 10;
 	if (68 in keysDown){ //d
 		ball.direction = "right";
-		balls.push(ball);	
+		if(!fired)
+		{
+			balls.push(ball);	
+			fired = true;
+		}
 		fireDirection = "d";
 	}
 	else if(83 in keysDown){ //s
 		ball.direction = "down";
-		balls.push(ball);
+		if(!fired)
+		{
+			balls.push(ball);	
+			fired = true;
+		}
 		fireDirection = "s";
 	}
 	else if(65 in keysDown){ //a
 		ball.direction = "left";
-		balls.push(ball);
+		if(!fired)
+		{
+			balls.push(ball);	
+			fired = true;
+		}
 		fireDirection = "a";
 	}
 	else if(87 in keysDown){ //w
 		ball.direction = "up";
-		balls.push(ball);
+		if(!fired)
+		{
+			balls.push(ball);	
+			fired = true;
+		}
 		fireDirection = "w";
 	}
 }
@@ -178,18 +196,11 @@ function moveBullets(){
 function compare(x, y)
 {
 	if( x == y ) return true;
-	if( x+1 == y ) return true;
-	if( x == y+1 ) return true;
-	if( x+2 == y ) return true;
-	if( x == y+2 ) return true;
-	if( x+3 == y ) return true;
-	if( x == y+3 ) return true;
-    if( x+4 == y ) return true;
-	if( x == y+4 ) return true;
-	if( x+5 == y ) return true;
-	if( x == y+5 ) return true;
-	if( x+6 == y ) return true;
-	if( x == y+6 ) return true;
+	for(let i = 1; i <= 10; i++)
+	{
+		if( x+i == y ) return true;
+		if( x == y+i ) return true;	
+	}
 	
 	return false;
 }
@@ -332,6 +343,7 @@ function main(){
 		gameOver();
 		if (32 in keysDown) {
 			hero.isAlive = true;
+			monstersCaught = 0;
 		}
 		reset();
 		requestAnimationFrame(main);
