@@ -33,7 +33,7 @@ var ballImage = new Image();
 ballImage.onload = function(){
 	ballReady = true;
 }
-ballImage.src = "images/BallBlue.jpg";
+ballImage.src = "images/BallBlue.png";
 
 monsterImage.src = "images/newMonster.png";
 
