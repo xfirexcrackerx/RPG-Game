@@ -47,6 +47,7 @@ var hero = {
 var enemies = [{x: 0, y: 0, speed: 1}];
 var monstersCaught = 0;
 var balls = [];
+var level = 1;
 
 
 // Handle keyboard controls
@@ -212,25 +213,68 @@ function collistionEnemyWithBullets(){
 				balls = [];
 				enemies.splice(j, 1);
 				++monstersCaught;
-				if(enemies.length == 0) {
+				if(level == 1){
+					if(enemies.length == 0) {
+						enemies.push({x: 0, y: 0, speed: 1});
+						if(monstersCaught >= 1 && monstersCaught <= 1){
+							enemies.push({x: 0, y: 0, speed: 1});
+						}
+					
+						if(monstersCaught >= 2 && monstersCaught <= 3){
+							enemies.push({x: 0, y: 0, speed: 1});
+							enemies.push({x: 0, y: 0, speed: 1});
+						}
+						if(monstersCaught >= 4 && monstersCaught <= 6){
+							enemies.push({x: 0, y: 0, speed: 1});
+							enemies.push({x: 0, y: 0, speed: 1});
+							enemies.push({x: 0, y: 0, speed: 1});
+						}
+						if(monstersCaught >= 7 && monstersCaught <= 10){
+							enemies.push({x: 0, y: 0, speed: 1});
+							enemies.push({x: 0, y: 0, speed: 1});
+							enemies.push({x: 0, y: 0, speed: 1});
+							enemies.push({x: 0, y: 0, speed: 1});
+						}
+						if(monstersCaught >= 11 && monstersCaught <= 15){
+							enemies.push({x: 0, y: 0, speed: 1});
+							enemies.push({x: 0, y: 0, speed: 1});
+							enemies.push({x: 0, y: 0, speed: 1});
+							enemies.push({x: 0, y: 0, speed: 1});
+							enemies.push({x: 0, y: 0, speed: 1});
+						}
+						if(monstersCaught >= 16 && monstersCaught <= 21){
+							enemies.push({x: 0, y: 0, speed: 1});
+							enemies.push({x: 0, y: 0, speed: 1});
+							enemies.push({x: 0, y: 0, speed: 1});
+							enemies.push({x: 0, y: 0, speed: 1});
+							enemies.push({x: 0, y: 0, speed: 1});
+							enemies.push({x: 0, y: 0, speed: 1});
+						}
+						if(monstersCaught == 21){
+							level = 2;
+							monsterImage.src = "images/enemy1.png";
+							enemies = [];
+							ctx.fillStyle = "red";
+							ctx.font = "40px Comic-sans";
+							ctx.textAlign = "center";
+							ctx.fillStyle = "white";
+							ctx.font = "20px Comic-sans ";
+							ctx.fillText("press space to level 2",250,200);
+							if (32 in keysDown) {
+								reset();
+								enemies.push({x: 0, y: 0, speed: 1});
+							}							
+						}
+						reset();
+					}
+				}
+				else if(level == 2){
 					enemies.push({x: 0, y: 0, speed: 1});
-					if(monstersCaught >= 5 && monstersCaught <= 9){
-						enemies.push({x: 0, y: 0, speed: 1});
-					}
-				
-					if(monstersCaught >= 10 && monstersCaught <= 14){
-						enemies.push({x: 0, y: 0, speed: 1});
-						enemies.push({x: 0, y: 0, speed: 1});
-					}
-					if(monstersCaught >= 15){
-						enemies.push({x: 0, y: 0, speed: 1});
-						enemies.push({x: 0, y: 0, speed: 1});
-						enemies.push({x: 0, y: 0, speed: 1});
-					}
 					reset();
 				}
+				
 				return;
-			}			
+			}		
 		}
 	}
 }
