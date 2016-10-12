@@ -24,26 +24,9 @@
       <file leaf-file-name="game.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/game.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="385" column="25" selection-start-line="385" selection-start-column="25" selection-end-line="385" selection-end-column="25" />
-              <folding>
-                <element signature="e#718#740#0" expanded="false" />
-                <element signature="e#853#961#0" expanded="false" />
-                <element signature="e#1202#1234#0" expanded="false" />
-                <element signature="e#1284#1332#0" expanded="false" />
-                <element signature="n#!!block;n#reset#0" expanded="false" />
-                <element signature="n#!!block;n#gameOver#0" expanded="false" />
-                <element signature="n#!!block;n#update#0" expanded="false" />
-                <element signature="n#!!block;n#fire#0" expanded="false" />
-                <element signature="n#!!block;n#moveBullets#0" expanded="false" />
-                <element signature="n#!!block;n#compare#0" expanded="false" />
-                <element signature="n#!!block;n#collistionEnemyWithBullets#0" expanded="false" />
-                <element signature="n#!!block;n#collisionWithEnemy#0" expanded="false" />
-                <element signature="n#!!block;n#lookingForCollisions#0" expanded="false" />
-                <element signature="n#!!block;n#enemyAI#0" expanded="false" />
-                <element signature="n#!!block;n#moveEnemy#0" expanded="false" />
-                <element signature="n#!!block;n#render#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="-154">
+              <caret line="65" column="1" selection-start-line="65" selection-start-column="1" selection-end-line="65" selection-end-column="1" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -184,12 +167,12 @@
       <workItem from="1476200420604" duration="1972000" />
       <workItem from="1476204188149" duration="1779000" />
       <workItem from="1476284480107" duration="1260000" />
-      <workItem from="1476290769397" duration="1468000" />
+      <workItem from="1476290769397" duration="2084000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10589000" />
+    <option name="totallyTimeSpent" value="11205000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -235,24 +218,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#718#740#0" expanded="false" />
-            <element signature="e#853#961#0" expanded="false" />
-            <element signature="e#1202#1234#0" expanded="false" />
-            <element signature="e#1284#1332#0" expanded="false" />
-            <element signature="n#!!block;n#reset#0" expanded="false" />
-            <element signature="n#!!block;n#gameOver#0" expanded="false" />
-            <element signature="n#!!block;n#update#0" expanded="false" />
-            <element signature="n#!!block;n#fire#0" expanded="false" />
-            <element signature="n#!!block;n#moveBullets#0" expanded="false" />
-            <element signature="n#!!block;n#compare#0" expanded="false" />
-            <element signature="n#!!block;n#collistionEnemyWithBullets#0" expanded="false" />
-            <element signature="n#!!block;n#collisionWithEnemy#0" expanded="false" />
-            <element signature="n#!!block;n#lookingForCollisions#0" expanded="false" />
-            <element signature="n#!!block;n#enemyAI#0" expanded="false" />
-            <element signature="n#!!block;n#moveEnemy#0" expanded="false" />
-            <element signature="n#!!block;n#render#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -268,24 +234,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#718#740#0" expanded="false" />
-            <element signature="e#853#961#0" expanded="false" />
-            <element signature="e#1202#1234#0" expanded="false" />
-            <element signature="e#1284#1332#0" expanded="false" />
-            <element signature="n#!!block;n#reset#0" expanded="false" />
-            <element signature="n#!!block;n#gameOver#0" expanded="false" />
-            <element signature="n#!!block;n#update#0" expanded="false" />
-            <element signature="n#!!block;n#fire#0" expanded="false" />
-            <element signature="n#!!block;n#moveBullets#0" expanded="false" />
-            <element signature="n#!!block;n#compare#0" expanded="false" />
-            <element signature="n#!!block;n#collistionEnemyWithBullets#0" expanded="false" />
-            <element signature="n#!!block;n#collisionWithEnemy#0" expanded="false" />
-            <element signature="n#!!block;n#lookingForCollisions#0" expanded="false" />
-            <element signature="n#!!block;n#enemyAI#0" expanded="false" />
-            <element signature="n#!!block;n#moveEnemy#0" expanded="false" />
-            <element signature="n#!!block;n#render#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -301,24 +250,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#718#740#0" expanded="false" />
-            <element signature="e#853#961#0" expanded="false" />
-            <element signature="e#1202#1234#0" expanded="false" />
-            <element signature="e#1284#1332#0" expanded="false" />
-            <element signature="n#!!block;n#reset#0" expanded="false" />
-            <element signature="n#!!block;n#gameOver#0" expanded="false" />
-            <element signature="n#!!block;n#update#0" expanded="false" />
-            <element signature="n#!!block;n#fire#0" expanded="false" />
-            <element signature="n#!!block;n#moveBullets#0" expanded="false" />
-            <element signature="n#!!block;n#compare#0" expanded="false" />
-            <element signature="n#!!block;n#collistionEnemyWithBullets#0" expanded="false" />
-            <element signature="n#!!block;n#collisionWithEnemy#0" expanded="false" />
-            <element signature="n#!!block;n#lookingForCollisions#0" expanded="false" />
-            <element signature="n#!!block;n#enemyAI#0" expanded="false" />
-            <element signature="n#!!block;n#moveEnemy#0" expanded="false" />
-            <element signature="n#!!block;n#render#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -334,24 +266,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#718#740#0" expanded="false" />
-            <element signature="e#853#961#0" expanded="false" />
-            <element signature="e#1202#1234#0" expanded="false" />
-            <element signature="e#1284#1332#0" expanded="false" />
-            <element signature="n#!!block;n#reset#0" expanded="false" />
-            <element signature="n#!!block;n#gameOver#0" expanded="false" />
-            <element signature="n#!!block;n#update#0" expanded="false" />
-            <element signature="n#!!block;n#fire#0" expanded="false" />
-            <element signature="n#!!block;n#moveBullets#0" expanded="false" />
-            <element signature="n#!!block;n#compare#0" expanded="false" />
-            <element signature="n#!!block;n#collistionEnemyWithBullets#0" expanded="false" />
-            <element signature="n#!!block;n#collisionWithEnemy#0" expanded="false" />
-            <element signature="n#!!block;n#lookingForCollisions#0" expanded="false" />
-            <element signature="n#!!block;n#enemyAI#0" expanded="false" />
-            <element signature="n#!!block;n#moveEnemy#0" expanded="false" />
-            <element signature="n#!!block;n#render#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -367,24 +282,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#718#740#0" expanded="false" />
-            <element signature="e#853#961#0" expanded="false" />
-            <element signature="e#1202#1234#0" expanded="false" />
-            <element signature="e#1284#1332#0" expanded="false" />
-            <element signature="n#!!block;n#reset#0" expanded="false" />
-            <element signature="n#!!block;n#gameOver#0" expanded="false" />
-            <element signature="n#!!block;n#update#0" expanded="false" />
-            <element signature="n#!!block;n#fire#0" expanded="false" />
-            <element signature="n#!!block;n#moveBullets#0" expanded="false" />
-            <element signature="n#!!block;n#compare#0" expanded="false" />
-            <element signature="n#!!block;n#collistionEnemyWithBullets#0" expanded="false" />
-            <element signature="n#!!block;n#collisionWithEnemy#0" expanded="false" />
-            <element signature="n#!!block;n#lookingForCollisions#0" expanded="false" />
-            <element signature="n#!!block;n#enemyAI#0" expanded="false" />
-            <element signature="n#!!block;n#moveEnemy#0" expanded="false" />
-            <element signature="n#!!block;n#render#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -400,24 +298,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#718#740#0" expanded="false" />
-            <element signature="e#853#961#0" expanded="false" />
-            <element signature="e#1202#1234#0" expanded="false" />
-            <element signature="e#1284#1332#0" expanded="false" />
-            <element signature="n#!!block;n#reset#0" expanded="false" />
-            <element signature="n#!!block;n#gameOver#0" expanded="false" />
-            <element signature="n#!!block;n#update#0" expanded="false" />
-            <element signature="n#!!block;n#fire#0" expanded="false" />
-            <element signature="n#!!block;n#moveBullets#0" expanded="false" />
-            <element signature="n#!!block;n#compare#0" expanded="false" />
-            <element signature="n#!!block;n#collistionEnemyWithBullets#0" expanded="false" />
-            <element signature="n#!!block;n#collisionWithEnemy#0" expanded="false" />
-            <element signature="n#!!block;n#lookingForCollisions#0" expanded="false" />
-            <element signature="n#!!block;n#enemyAI#0" expanded="false" />
-            <element signature="n#!!block;n#moveEnemy#0" expanded="false" />
-            <element signature="n#!!block;n#render#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -441,26 +322,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/game.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="385" column="25" selection-start-line="385" selection-start-column="25" selection-end-line="385" selection-end-column="25" />
-          <folding>
-            <element signature="e#718#740#0" expanded="false" />
-            <element signature="e#853#961#0" expanded="false" />
-            <element signature="e#1202#1234#0" expanded="false" />
-            <element signature="e#1284#1332#0" expanded="false" />
-            <element signature="n#!!block;n#reset#0" expanded="false" />
-            <element signature="n#!!block;n#gameOver#0" expanded="false" />
-            <element signature="n#!!block;n#update#0" expanded="false" />
-            <element signature="n#!!block;n#fire#0" expanded="false" />
-            <element signature="n#!!block;n#moveBullets#0" expanded="false" />
-            <element signature="n#!!block;n#compare#0" expanded="false" />
-            <element signature="n#!!block;n#collistionEnemyWithBullets#0" expanded="false" />
-            <element signature="n#!!block;n#collisionWithEnemy#0" expanded="false" />
-            <element signature="n#!!block;n#lookingForCollisions#0" expanded="false" />
-            <element signature="n#!!block;n#enemyAI#0" expanded="false" />
-            <element signature="n#!!block;n#moveEnemy#0" expanded="false" />
-            <element signature="n#!!block;n#render#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="-154">
+          <caret line="65" column="1" selection-start-line="65" selection-start-column="1" selection-end-line="65" selection-end-column="1" />
+          <folding />
         </state>
       </provider>
     </entry>
