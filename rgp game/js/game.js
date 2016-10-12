@@ -1,9 +1,11 @@
 // Create the canvas
 var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
+<<<<<<< .mine=======canvas.width = 1301;
+canvas.height = 600;
+>>>>>>> .theirsdocument.body.appendChild(canvas);
 canvas.width = 1301;
 canvas.height = 600;
-document.body.appendChild(canvas);
 
 // Background image
 var bgReady = false;
@@ -27,6 +29,14 @@ var monsterImage = new Image();
 monsterImage.onload = function () {
 	monsterReady = true;
 };
+monsterImage.src = "images/newMonster.png";
+
+var bossReady = false;
+var bossImage = new Image();
+bossImage.onload = function(){
+	bossReady = true;
+}
+bossImage.src = "images/BigEnemy.png";
 
 var ballReady = false;
 var ballImage = new Image();
@@ -35,7 +45,6 @@ ballImage.onload = function(){
 }
 ballImage.src = "images/BallBlue.png";
 
-monsterImage.src = "images/newMonster.png";
 
 // Game objects
 var hero = {
@@ -46,6 +55,7 @@ var hero = {
 };
 var enemies = [{x: 0, y: 0, speed: 1}];
 var monstersCaught = 0;
+var boss = {};
 var balls = [];
 var level = 1;
 var pressSpaceToContinue = false;
@@ -209,7 +219,28 @@ function collistionEnemyWithBullets(){
 		let currentBullet = balls[i];
 		for(let j = 0; j < enemies.length; j++){
 			var currentEnemy = enemies[j];
-			if(compare(Math.round(currentEnemy.x),Math.round(currentBullet.x)) && compare(Math.round(currentEnemy.y),Math.round(currentBullet.y))) 
+			
+			let currentBulletXPos = Math.round(currentBullet.x);
+			let currentBulletYPos = Math.round(currentBullet.y);
+			
+			let bossX = Math.round(boss.x);
+			let bossY = Math.round(boss.y);
+			
+			let currentEnemyXPos = Math.round(currentEnemy.x);
+			let currentEnemyYPos = Math.round(currentEnemy.y);
+
+			if(compare(bossX, currentBulletXPos) && compare(bossY, currentBulletYPos)){
+				boss.health--;
+				if(boss.health == 0){
+					boss = {};
+				}
+				if(enemies.length == 0 && boss.health == 0){
+					pressSpaceToContinue = true;
+					hero.isAlive = false;
+				}
+			}
+
+			if(compare(currentEnemyXPos,currentBulletXPos) && compare(currentEnemyYPos,currentBulletYPos)) 
 			{
 				balls = [];
 				enemies.splice(j, 1);
@@ -254,18 +285,26 @@ function collistionEnemyWithBullets(){
 						if(monstersCaught == 21){
 							level = 2;
 							monsterImage.src = "images/enemy1.png";
+							bgImage.src = "images/background2.png";							
 							enemies = [];
 							pressSpaceToContinue = true;
 							hero.isAlive = false;
 							reset();
-							enemies.push({x: 0, y: 0, speed: 1});					
+							enemies.push({x: 0, y: 0, speed: 1});
+							enemies.push({x: 0, y: 0, speed: 1});
+							enemies.push({x: 0, y: 0, speed: 1});
+							enemies.push({x: 0, y: 0, speed: 1});
+							enemies.push({x: 0, y: 0, speed: 1});
+							enemies.push({x: 0, y: 0, speed: 1});				
 						}
 						reset();
 					}
 				}
 				else if(level == 2){
-					enemies.push({x: 0, y: 0, speed: 1});
-					reset();
+					if(enemies.length == 0 && boss.health == 0){
+						pressSpaceToContinue = true;
+						hero.isAlive = false;
+					}
 				}
 				
 				return;
@@ -284,6 +323,15 @@ function collisionWithEnemy(){
 			reset();
 			gameOver();
 		}
+	}
+
+	if (hero.x <= (boss.x + bossImage.width)
+		&& boss.x <= (hero.x + bossImage.width)
+		&& hero.y <= (boss.y + bossImage.width)
+		&& boss.y <= (hero.y + bossImage.width)) {
+
+		reset();
+		gameOver();
 	}
 }
 
@@ -307,7 +355,20 @@ function enemyAI(){
 			enemies[i].directionY = 'down';
 		}
 	}
-	
+
+	//boss AI
+	if(boss.x > hero.x){
+		boss.directionX = 'left';
+	}
+	else{
+		boss.directionX = 'right';
+	}
+	if(boss.y > hero.y){
+		boss.directionY = 'up';
+	}
+	else{
+		boss.directionY = 'down';
+	}
 }
 
 function moveEnemy(){
@@ -332,7 +393,29 @@ function moveEnemy(){
 				enemies[i].y += enemies[i].speed;
 			}
 		}
-	}	
+	}
+
+	//move boss
+	if(boss.directionX == 'right'){
+		if(boss.x + boss.speed < canvas.width){
+			boss.x += boss.speed;
+		}
+	}
+	else{
+		if(boss.x - boss.speed > 0){
+			boss.x -= boss.speed;
+		}
+	}
+	if(boss.directionY == 'up'){
+		if(boss.y - boss.speed > 0){
+			boss.y -= boss.speed;
+		}
+	}
+	else{
+		if(boss.y + boss.speed < canvas.height){
+			boss.y += boss.speed;
+		}
+	}
 }
 
 // Draw everything
@@ -354,6 +437,10 @@ function render(){
 		for(let i = 0; i < balls.length; i++){
 			ctx.drawImage(ballImage, balls[i].x, balls[i].y);
 		}
+	}
+
+	if(bossReady){
+		ctx.drawImage(bossImage, boss.x, boss.y);
 	}
 	
 	// Score
@@ -388,6 +475,10 @@ function main(){
 			if(32 in keysDown){
 				hero.isAlive = true;
 				pressSpaceToContinue = false;
+				boss.x = canvas.width / 2;
+				boss.y = 10;
+				boss.health = 10;
+				boss.speed = 1;
 			}
 			requestAnimationFrame(main);
 		}		
