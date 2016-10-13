@@ -403,10 +403,9 @@ function main(){
 		}
 		else{
 			if(win){
-				ctx.fillStyle = "blue";
 				ctx.font = "40px Comic-sans";
 				ctx.textAlign = "center";
-				ctx.fillStyle = "white";
+				ctx.fillStyle = "blue";
 				ctx.font = "40px Comic-sans ";
 				ctx.fillText("YOU WIN",canvas.width/2,canvas.height/2);
 				ctx.fillText("YOUR SCORE: " + monstersCaught,canvas.width/2,canvas.height/2 + 70);
